@@ -1,6 +1,6 @@
 postgres:
-  host: localhost
-  port: "5432"
-  dbname: "postgres"
-  user: "admin"
-  password: "password"
+  host: ${POSTGRES_HOST:localhost}
+  port: ${POSTGRES_PORT:5432}
+  dbname: ${POSTGRES_DB_NAME:postgres}
+  user: ${POSTGRES_USER:admin}
+  password: ${POSTGRES_PASSWORD:password}

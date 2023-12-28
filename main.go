@@ -1,6 +1,6 @@
 package main
 
-import module "github.com/antoniofrs/experiment-go-postgresql/pkg/modules"
+import module "github.com/antoniofrs/experiment-go-postgresql/pkg/module"
 
 func main() {
 	module.InitConfigs()

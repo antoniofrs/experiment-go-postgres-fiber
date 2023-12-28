@@ -3,6 +3,7 @@ package module
 import (
 	"fmt"
 	"os"
+	"regexp"
 
 	"gopkg.in/yaml.v2"
 )
@@ -24,6 +25,10 @@ func InitConfigs() {
 
 	config = make(map[string]string)
 	initKeys("", result)
+
+	for chiave, valore := range config {
+        fmt.Printf("Chiave: %s, Valore: %s\n", chiave, valore)
+    }
 }
 
 func formatKey(prefix string, key interface{}) string {
@@ -40,7 +45,25 @@ func initKeys(prefix string, data map[interface{}]interface{}) {
 		if v, ok := value.(map[interface{}]interface{}); ok {
 			initKeys(fullKey, v)
 		} else {
-			config[fullKey] = fmt.Sprintf("%s", value)
+			config[fullKey] = formatValue(value)
 		}
 	}
+}
+
+
+func formatValue(value interface{}) string {
+	strValue := fmt.Sprintf("%s", value)
+	re := regexp.MustCompile("\\$\\{([^:]+)(:([^\\}]+))?\\}")
+	result := re.ReplaceAllStringFunc(strValue, func(match string) string {
+		matches := re.FindStringSubmatch(match)
+		envVar := matches[1]
+		defaultVal := matches[3]
+
+		if val, exists := os.LookupEnv(envVar); exists {
+			return val
+		}
+		return defaultVal
+	})
+
+	return result
 }
