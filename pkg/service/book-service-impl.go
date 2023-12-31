@@ -17,7 +17,7 @@ func NewBookService(BookRepository repository.BookRepository) BookService {
 }
 
 // Create implements BookService.
-func (s *BookServiceImpl) Create(InsertBookDto dto.InsertBookDto) dto.BookDto {
+func (s *BookServiceImpl) Create(InsertBookDto *dto.InsertBookDto) dto.BookDto {
 
 	book := model.Book{
 		ID:               uuid.Nil,
@@ -47,7 +47,7 @@ func (s *BookServiceImpl) FindById(id uuid.UUID) dto.BookDto {
 }
 
 // Update implements BookService.
-func (s *BookServiceImpl) Update(id uuid.UUID, InsertBookDto dto.InsertBookDto) dto.BookDto {
+func (s *BookServiceImpl) Update(id uuid.UUID, insertBookDto *dto.InsertBookDto) dto.BookDto {
 
 	book := s.BookRepository.FindById(id)
 
@@ -57,9 +57,9 @@ func (s *BookServiceImpl) Update(id uuid.UUID, InsertBookDto dto.InsertBookDto) 
 
 	newBook := model.Book{
 		ID:               book.ID,
-		Title:            InsertBookDto.Title,
-		Author:           InsertBookDto.Author,
-		PubblicationDate: InsertBookDto.PubblicationDate,
+		Title:            insertBookDto.Title,
+		Author:           insertBookDto.Author,
+		PubblicationDate: insertBookDto.PubblicationDate,
 	}
 
 	s.BookRepository.Save(&newBook)

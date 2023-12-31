@@ -55,10 +55,9 @@ func (b *BookRepositoryImpl) FindById(bookId uuid.UUID) *model.Book {
 // Save implements BookRepository.
 func (b *BookRepositoryImpl) Save(book *model.Book) {
 
-	result := b.Db.Create(book)
+	result := b.Db.Save(book)
 
 	if (result.Error) != nil {
-		panic("dbError")
+		panic(result.Error)
 	}
-
 }

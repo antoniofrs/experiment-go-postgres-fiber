@@ -9,7 +9,6 @@ type BookDto struct {
 	Title            string    `json:"title"`
 	Author           string    `json:"author"`
 	PubblicationDate string    `json:"pubblicationDate"`
-	Completed        bool      `json:"completed"`
 }
 
 type InsertBookDto struct {

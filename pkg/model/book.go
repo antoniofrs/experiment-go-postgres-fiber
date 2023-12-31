@@ -6,19 +6,21 @@ import (
 )
 
 type Book struct {
-	ID               uuid.UUID `gorm:"primaryKey"`
+	ID               uuid.UUID `gorm:"primaryKey;gorm:type:uuid;default:gen_random_uuid()"`
 	Title            string
 	Author           string
 	PubblicationDate string
-	Completed        bool
+}
+
+func (Book) TableName() string {
+    return "book"
 }
 
 func (book Book) ToDto() dto.BookDto {
 	return dto.BookDto{
-		ID:               uuid.Nil,
+		ID:               book.ID,
 		Title:            book.Title,
 		Author:           book.Author,
 		PubblicationDate: book.PubblicationDate,
-		Completed:        book.Completed,
 	}
 }

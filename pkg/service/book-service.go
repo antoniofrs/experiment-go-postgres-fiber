@@ -6,8 +6,8 @@ import (
 )
 
 type BookService interface {
-	Create(InsertBookDto dto.InsertBookDto) dto.BookDto
-	Update(Id uuid.UUID, InsertBookDto dto.InsertBookDto) dto.BookDto
+	Create(InsertBookDto *dto.InsertBookDto) dto.BookDto
+	Update(id uuid.UUID, insertBookDto *dto.InsertBookDto) dto.BookDto
 	Delete(Id uuid.UUID)
 	FindById(Id uuid.UUID) dto.BookDto
 	FindAll() []dto.BookDto

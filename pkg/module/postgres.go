@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/antoniofrs/experiment-go-postgresql/pkg/model"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -11,7 +12,7 @@ import (
 func NewPostgres() *gorm.DB {
 
 	dsn := getDbDsn()
-	
+
 	var err error
 	PostgresDb, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
@@ -20,12 +21,14 @@ func NewPostgres() *gorm.DB {
 		os.Exit(1)
 	}
 
+	PostgresDb.AutoMigrate(&model.Book{})
+
 	return PostgresDb
 }
 
 func getDbDsn() string {
 
-	return "host=" + config["postgres.host"]+
+	return "host=" + config["postgres.host"] +
 		" port=" + config["postgres.port"] +
 		" user=" + config["postgres.user"] +
 		" password=" + config["postgres.password"] +
