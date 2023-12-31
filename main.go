@@ -23,7 +23,8 @@ func main() {
 	app := fiber.New()
 	api := app.Group("/api")
 
-	routes.InitBookRouter(bookController, api)
+	routes.InitBookRoutes(api, bookController)
+	routes.InitHealtRoutes(api)
 
 	app.Listen(":3000")
 

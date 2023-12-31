@@ -5,7 +5,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func InitBookRouter(controller *controller.BookController, router fiber.Router) {
+func InitBookRoutes(router fiber.Router, controller *controller.BookController) {
 	router.Get("/book", controller.FindAll)
 	router.Get("/book/:Id", controller.FindById)
 	router.Post("/book", controller.Create)
