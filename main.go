@@ -1,9 +1,30 @@
 package main
 
-import module "github.com/antoniofrs/experiment-go-postgresql/pkg/module"
+import (
+	"github.com/antoniofrs/experiment-go-postgresql/pkg/controller"
+	module "github.com/antoniofrs/experiment-go-postgresql/pkg/module"
+	"github.com/antoniofrs/experiment-go-postgresql/pkg/repository"
+	"github.com/antoniofrs/experiment-go-postgresql/pkg/routes"
+	"github.com/antoniofrs/experiment-go-postgresql/pkg/service"
+	"github.com/gofiber/fiber/v2"
+)
 
 func main() {
 	module.InitConfigs()
-	module.InitPostgres()
-	module.InitRoutes()
+	
+	db := module.NewPostgres()
+
+	// Book
+	BookRepository := repository.NewBookRepository(db)
+	bookService := service.NewBookService(BookRepository)
+	bookController := controller.NewBookController(bookService)
+
+
+	app := fiber.New()
+	api := app.Group("/api")
+
+	routes.InitBookRouter(bookController, api)
+
+	app.Listen(":3000")
+
 }

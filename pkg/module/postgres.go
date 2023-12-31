@@ -8,9 +8,7 @@ import (
 	"gorm.io/gorm"
 )
 
-var PostgresDb *gorm.DB
-
-func InitPostgres() error {
+func NewPostgres() *gorm.DB {
 
 	dsn := getDbDsn()
 	
@@ -22,11 +20,8 @@ func InitPostgres() error {
 		os.Exit(1)
 	}
 
-	print(PostgresDb)
-
-	return err
+	return PostgresDb
 }
-
 
 func getDbDsn() string {
 

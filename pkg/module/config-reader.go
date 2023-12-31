@@ -25,10 +25,6 @@ func InitConfigs() {
 
 	config = make(map[string]string)
 	initKeys("", result)
-
-	for chiave, valore := range config {
-        fmt.Printf("Chiave: %s, Valore: %s\n", chiave, valore)
-    }
 }
 
 func formatKey(prefix string, key interface{}) string {
