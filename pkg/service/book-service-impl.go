@@ -2,6 +2,7 @@ package service
 
 import (
 	"github.com/antoniofrs/experiment-go-postgresql/pkg/dto"
+	"github.com/antoniofrs/experiment-go-postgresql/pkg/error-handler"
 	"github.com/antoniofrs/experiment-go-postgresql/pkg/model"
 	"github.com/antoniofrs/experiment-go-postgresql/pkg/repository"
 	"github.com/antoniofrs/experiment-go-postgresql/pkg/utils"
@@ -52,7 +53,7 @@ func (s *BookServiceImpl) Update(id uuid.UUID, insertBookDto *dto.InsertBookDto)
 	book := s.BookRepository.FindById(id)
 
 	if book == nil {
-		panic("No books with id " + id.String())
+		panic(errorhandler.NotFoundException("No books with id " + id.String()))
 	}
 
 	newBook := model.Book{
@@ -73,7 +74,7 @@ func (s *BookServiceImpl) Delete(id uuid.UUID) {
 	book := s.BookRepository.FindById(id)
 
 	if book == nil {
-		panic("No books with id " + id.String())
+		panic(errorhandler.NotFoundException("No books with id " + id.String()))
 	}
 
 	s.BookRepository.Delete(book)

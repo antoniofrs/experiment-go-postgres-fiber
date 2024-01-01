@@ -1,6 +1,7 @@
 package repository
 
 import (
+	errorhandler "github.com/antoniofrs/experiment-go-postgresql/pkg/error-handler"
 	"github.com/antoniofrs/experiment-go-postgresql/pkg/model"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
@@ -19,7 +20,7 @@ func (b *BookRepositoryImpl) Delete(book *model.Book) {
 	result := b.Db.Delete(book)
 
 	if (result.Error) != nil {
-		panic("dbError")
+		panic(errorhandler.InternalServerException("dbError"))
 	}
 }
 
@@ -30,7 +31,7 @@ func (b *BookRepositoryImpl) FindAll() *[]model.Book {
 	result := b.Db.Find(&books)
 
 	if (result.Error) != nil {
-		panic("dbError")
+		panic(errorhandler.InternalServerException("dbError"))
 	}
 
 	return &books
@@ -42,7 +43,7 @@ func (b *BookRepositoryImpl) FindById(bookId uuid.UUID) *model.Book {
 	book := new(model.Book)
 	
 	if b.Db.First(book, bookId).Error != nil { 
-		panic("dbError")
+		panic(errorhandler.InternalServerException("dbError"))
 	}
 
 	if(book.ID == uuid.Nil){
@@ -58,6 +59,6 @@ func (b *BookRepositoryImpl) Save(book *model.Book) {
 	result := b.Db.Save(book)
 
 	if (result.Error) != nil {
-		panic(result.Error)
+		panic(errorhandler.InternalServerException("dbError"))
 	}
 }
